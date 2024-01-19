@@ -1,0 +1,5 @@
+# Dotfiles
+Setup:
+```bash
+stow .
+```
