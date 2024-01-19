@@ -104,6 +104,7 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PYTHON_PATH="/usr/bin/python3"
 export PATH=$PATH:~/.local/bin/
 
+alias vim="nvim"
 alias ll="ls -la"
 alias prog="cd /mnt/c/Users/Daniel\ Nettelfield/Desktop/Programmering/"
 alias work="prog && cd cernel_backend && source .venv/bin/activate"
