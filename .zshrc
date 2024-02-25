@@ -100,13 +100,10 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-export PYTHON_PATH="/usr/bin/python3"
-export PATH=$PATH:~/.local/bin/
-
 alias vim="nvim"
 alias ll="ls -la"
-alias work="cd ~/Projects/cernel_backend && source .venv/bin/activate"
+alias cat=bat
+alias ls=lsd
 
 eval "$(zoxide init --cmd cd zsh)"
 
