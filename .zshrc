@@ -110,6 +110,7 @@ alias cat=bat
 alias ls=lsd
 
 eval "$(zoxide init --cmd cd zsh)"
+eval $(thefuck --alias)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
