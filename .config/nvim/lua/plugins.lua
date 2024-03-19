@@ -75,7 +75,7 @@ return require('packer').startup(function(use)
     use 'tommcdo/vim-exchange'
     use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-lint'
-    use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap' } }
+    use { 'rcarriga/nvim-dap-ui', requires = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' } }
     use({
         'utilyre/barbecue.nvim',
         tag = '*',
