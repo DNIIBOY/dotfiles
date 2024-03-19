@@ -40,7 +40,13 @@ return require('packer').startup(function(use)
     use 'gcmt/wildfire.vim'
     use 'tpope/vim-commentary'
     use 'tpope/vim-repeat'
-    use 'tpope/vim-fugitive'
+    use {
+        'NeogitOrg/neogit',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim',
+        }
+    }
 
     use({
         'kylechui/nvim-surround', -- This supports dsf
