@@ -1,3 +1,7 @@
+local neogit = require('neogit')
+neogit.setup()
+vim.keymap.set('n', '<leader>g', neogit.open, { noremap = true, silent = true })
+
 require('gitsigns').setup {
     signs                        = {
         add          = { text = '│' },
