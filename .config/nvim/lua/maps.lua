@@ -21,3 +21,6 @@ keymap.set('n', '<C-s>', ':%s//g<Left><Left>')
 keymap.set('n', '<Esc>', ':noh <CR>', { silent = true })
 
 keymap.set('t', '<Esc>', '<C-\\><C-N>')
+
+keymap.set('n', '<leader>n', '<cmd>:cn<cr>', { silent = true })
+keymap.set('n', '<leader>p', '<cmd>:cp<cr>', { silent = true })
