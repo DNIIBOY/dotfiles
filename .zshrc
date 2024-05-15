@@ -97,6 +97,7 @@ export PATH=$PATH:~/.local/bin/
 
 alias vim="nvim"
 alias vi="nvim"
+alias v="nvim"
 alias ll="ls -la"
 alias cat=bat
 alias ls=lsd
