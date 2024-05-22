@@ -95,12 +95,13 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PYTHON_PATH="/usr/bin/python3"
 export PATH=$PATH:~/.local/bin/
 
-alias vim="nvim"
-alias vi="nvim"
-alias v="nvim"
-alias ll="ls -la"
+alias c=clear
 alias cat=bat
+alias ll="ls -la"
 alias ls=lsd
+alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
 
 eval "$(zoxide init --cmd cd zsh)"
 eval $(thefuck --alias)
