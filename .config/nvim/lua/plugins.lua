@@ -33,6 +33,7 @@ return require('packer').startup(function(use)
     }
 
     use 'folke/tokyonight.nvim'
+    use 'goolord/alpha-nvim'
     use 'github/copilot.vim'
 
     use 'rmagatti/alternate-toggler'
