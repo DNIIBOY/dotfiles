@@ -99,6 +99,7 @@ alias c=clear
 alias cat=bat
 alias ll="ls -la"
 alias ls=lsd
+alias stegsolve="java -jar ~/tools/stegsolve"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
