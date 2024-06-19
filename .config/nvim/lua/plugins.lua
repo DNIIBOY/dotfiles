@@ -68,7 +68,12 @@ return require('packer').startup(function(use)
 
     use 'iamcco/markdown-preview.nvim'
     use 'nvim-treesitter/nvim-treesitter'
-    use 'windwp/nvim-ts-autotag'
+    use ({
+        'windwp/nvim-ts-autotag',
+        config = function()
+            require('nvim-ts-autotag').setup()
+        end
+    })
     use 'p00f/nvim-ts-rainbow'
 
     use 'lewis6991/gitsigns.nvim'
