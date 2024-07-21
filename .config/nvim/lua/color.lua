@@ -1,5 +1,7 @@
 vim.cmd [[colorscheme tokyonight-night]]
 
+require('colorizer').setup()
+
 vim.cmd([[highlight DiagnosticVirtualTextError guibg=#2428w3b]])
 vim.cmd([[highlight DiagnosticVirtualTextWarn guibg=#2428w3b]])
 vim.cmd([[highlight DiagnosticVirtualTextInfo guibg=#2428w3b]])
