@@ -68,7 +68,7 @@ return require('packer').startup(function(use)
 
     use 'iamcco/markdown-preview.nvim'
     use 'nvim-treesitter/nvim-treesitter'
-    use ({
+    use({
         'windwp/nvim-ts-autotag',
         config = function()
             require('nvim-ts-autotag').setup()
@@ -84,7 +84,7 @@ return require('packer').startup(function(use)
         'folke/todo-comments.nvim',
         requires = { { 'nvim-lua/plenary.nvim' } },
     }
-    use 'segeljakt/vim-silicon'
+    use { 'mistricky/codesnap.nvim', run = 'make' }
     use 'tommcdo/vim-exchange'
     use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-lint'
