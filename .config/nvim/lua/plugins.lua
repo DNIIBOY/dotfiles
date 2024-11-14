@@ -75,7 +75,7 @@ return require('packer').startup(function(use)
         end
     })
     use 'p00f/nvim-ts-rainbow'
-    use 'norcalli/nvim-colorizer.lua'
+    use 'uga-rosa/ccc.nvim'
 
     use 'lewis6991/gitsigns.nvim'
     use 'stevearc/dressing.nvim'

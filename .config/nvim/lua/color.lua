@@ -1,6 +1,11 @@
 vim.cmd [[colorscheme tokyonight-night]]
 
-require('colorizer').setup()
+require('ccc').setup({
+    highlighter = {
+        auto_enable = true,
+        lsp = true,
+    },
+})
 
 vim.cmd([[highlight DiagnosticVirtualTextError guibg=#2428w3b]])
 vim.cmd([[highlight DiagnosticVirtualTextWarn guibg=#2428w3b]])
