@@ -20,10 +20,6 @@ cmp.setup({
     mapping = cmp_mappings,
 })
 
-cmp.setup.filetype('sql,mysql,plsql', {
-    sources = { { name = 'vim-dadbod-completion' } }
-})
-
 lsp.set_preferences({
     suggest_lsp_servers = true,
     sign_icons = {
