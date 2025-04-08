@@ -39,4 +39,6 @@ config.keys = {
     }
 }
 
+config.harfbuzz_features = { "calt=0" }
+
 return config
