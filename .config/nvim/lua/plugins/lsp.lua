@@ -20,9 +20,6 @@ return {
             "williamboman/mason-lspconfig.nvim",
             "WhoIsSethDaniel/mason-tool-installer.nvim",
 
-            -- Useful status updates for LSP.
-            { "j-hui/fidget.nvim", opts = {} },
-
             -- Allows extra capabilities provided by nvim-cmp
             "hrsh7th/cmp-nvim-lsp",
         },
@@ -127,10 +124,6 @@ return {
                         })
                     end
 
-                    -- The following code creates a keymap to toggle inlay hints in your
-                    -- code, if the language server you are using supports them
-                    --
-                    -- This may be unwanted, since they displace some of your code
                     if
                         client
                         and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
@@ -190,7 +183,7 @@ return {
             local servers = {
                 -- clangd = {},
                 -- gopls = {},
-                -- pyright = {},
+                pylsp = {},
                 -- rust_analyzer = {},
                 -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
                 --
@@ -254,20 +247,6 @@ return {
             })
         end,
     },
-    {
-        "hrsh7th/nvim-cmp",
-        -- load cmp on InsertEnter
-        event = "InsertEnter",
-        -- these dependencies will only be loaded when cmp loads
-        -- dependencies are always lazy-loaded unless specified otherwise
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-        },
-        config = function()
-            -- ...
-        end,
-    },
     { -- Autoformat
         "stevearc/conform.nvim",
         event = { "BufWritePre" },
@@ -327,12 +306,12 @@ return {
                     -- `friendly-snippets` contains a variety of premade snippets.
                     --    See the README about individual language/framework/plugin snippets:
                     --    https://github.com/rafamadriz/friendly-snippets
-                    -- {
-                    --   "rafamadriz/friendly-snippets",
-                    --   config = function()
-                    --     require("luasnip.loaders.from_vscode").lazy_load()
-                    --   end,
-                    -- },
+                    {
+                      "rafamadriz/friendly-snippets",
+                      config = function()
+                        require("luasnip.loaders.from_vscode").lazy_load()
+                      end,
+                    },
                 },
             },
             "saadparwaiz1/cmp_luasnip",
@@ -424,4 +403,18 @@ return {
             })
         end,
     },
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        main = "nvim-treesitter.configs",
+        opts = {
+            ensure_installed = { "lua", "python" },
+            auto_install = true,
+            highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = {},
+            },
+            indent = { enable = true, disable = {} },
+        }
+    }
 }
