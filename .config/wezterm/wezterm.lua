@@ -39,6 +39,6 @@ config.keys = {
     }
 }
 
-config.harfbuzz_features = { "calt=0" }
+config.harfbuzz_features = { "calt=1" }
 
 return config

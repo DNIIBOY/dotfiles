@@ -1,6 +1,7 @@
 return {
     {
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons", opts = true },
         opts = {
             options = {
@@ -45,9 +46,10 @@ return {
     },
     {
         "Bekaboo/dropbar.nvim",
-        config = function()
-            local dropbar_api = require("dropbar.api")
-            vim.keymap.set("n", "<leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-        end
+        event = "BufReadPre",
+        keys = {
+            {"<leader>;", function() require("dropbar.api").pick() end, desc = "Pick symbols in winbar"}
+        },
+        opts = {},
     }
 }

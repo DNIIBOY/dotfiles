@@ -1,7 +1,7 @@
 return {
     {
         "christoomey/vim-tmux-navigator",
-        event = "VimEnter",
+        event = "VeryLazy",
     },
     {
         "kylechui/nvim-surround",
@@ -15,7 +15,6 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim"
         },
-        opts = true,
         config = function()
             require("harpoon")
         end,
