@@ -1,7 +1,6 @@
 return {
     {
         "NeogitOrg/neogit",
-        event = "VimEnter",
         keys = {{ "<leader>g", function() require("neogit").open() end, desc = "Open Neogit" }},
     },
     {
