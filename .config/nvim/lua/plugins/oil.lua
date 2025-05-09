@@ -38,7 +38,8 @@ return {
             },
             view_options = {
                 show_hidden = true
-            }
+            },
+            silence_scp_warning = true
         },
     },
     {

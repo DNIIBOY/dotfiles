@@ -35,9 +35,9 @@ return {
                     end
 
                     map("gd", function() require("telescope.builtin").lsp_definitions() end, "[G]oto [D]efinition")
-                    map("rr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
                     map("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
-                    map("ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
+                    map("<leader>rr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
+                    map("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
                     map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
                     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
