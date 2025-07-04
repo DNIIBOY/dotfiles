@@ -1,0 +1,160 @@
+(defwidget ram []
+    (box :class "genwin"
+        :style "padding-top: 12px"
+        (overlay
+            (circular-progress :value 80
+                :class "arc_bg"
+                :thickness 12
+                :start-at 35
+                :clockwise true)
+            (circular-progress :value {EWW_RAM.used_mem_perc * 0.8}
+                :class "arc_fg"
+                :thickness 12
+                :start-at 35
+                :clockwise true
+                (label :class "arc_icon" :text "")))))
+
+(defwidget cpu []
+    (box :class "genwin"
+        :style "padding-top: 12px"
+        (overlay
+            (circular-progress :value 80
+                :class "arc_bg"
+                :thickness 12
+                :start-at 35
+                :clockwise true)
+            (circular-progress :value {EWW_CPU.avg * 0.8}
+                :class "arc_fg"
+                :thickness 12
+                :start-at 35
+                :clockwise true
+                (label :class "arc_icon" :text "")))))
+
+(defwidget battery []
+    (box :class "genwin"
+        :style "padding-top: 12px"
+        (overlay
+            (circular-progress :value 80
+                :class "arc_bg"
+                :thickness 12
+                :start-at 35
+                :clockwise true)
+            (circular-progress :value {EWW_BATTERY.BAT0.capacity * 0.8}
+                :class "arc_fg"
+                :thickness 12
+                :start-at 35
+                :clockwise true
+                (label :class "arc_icon" :text {EWW_BATTERY.BAT0.status == "Charging" ? "󱐋" : ""})))))
+
+(defwidget clock []
+    (box :class "genwin"
+        (label :class "time" :text "${formattime(EWW_TIME, "%H:%M")}")))
+
+(defwidget date []
+    (box :class "genwin" :orientation "v" :space-evenly false
+        (label :class "date" :text "${formattime(EWW_TIME, "%d %b")}")))
+
+(defwidget current_weather []
+    (box :class "genwin"
+        (label :class "current_weather" :text "10°")
+        (label :class "current_weather" :text "")))
+
+
+(defwidget peak_weather []
+    (box :class "smallwin"
+        (label :class "peak_weather" :text "21°")))
+
+(defwidget low_weather []
+    (box :class "smallwin"
+        (label :class "peak_weather" :text "8°")))
+
+(defwindow clock
+    :stacking "bg"
+    :focusable false
+    :monitor 0
+    :geometry (geometry
+        :anchor "top left"
+        :x 25
+        :y 25
+        :width 180
+    )(clock))
+
+(defwindow date
+    :stacking "bg"
+    :focusable false
+    :monitor 0
+    :geometry (geometry
+        :anchor "top right"
+        :x 25
+        :y 25
+        :width 180
+    )(date))
+
+(defwindow current_weather
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "top right"
+        :x 85
+        :y 125
+        :width 150
+    )(current_weather))
+
+(defwindow peak_weather
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "top right"
+        :x 25
+        :y 125
+        :width 50
+    )(peak_weather))
+
+(defwindow low_weather
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "top right"
+        :x 25
+        :y 160
+        :width 50
+    )(low_weather))
+
+(defwindow battery
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "bottom left"
+        :width 130
+        :height 130
+        :x 25
+        :y 25
+    )(battery))
+
+(defwindow ram
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "bottom left"
+        :width 130
+        :height 130
+        :x 25
+        :y 175
+    )(ram))
+
+(defwindow cpu
+    :stacking "bg"
+    :focusable "false"
+    :monitor 0
+    :geometry (geometry
+        :anchor "bottom left"
+        :width 130
+        :height 130
+        :x 25
+        :y 325
+    )(cpu))

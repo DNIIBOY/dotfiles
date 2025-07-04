@@ -1,0 +1,74 @@
+* {
+  all: unset;
+  font-family: feather;
+  font-family: Iosevka;
+}
+
+.genwin,
+.smallwin {
+  background-color: rgba(29, 19, 56, 0.6);
+}
+
+.genwin {
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.smallwin {
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.arc_icon {
+  font-size: 48px;
+  font-weight: 600;
+  color: rgba(5, 110, 159, 0.8);
+  text-shadow:
+    0 0 10px rgba(5, 110, 159, 0.9),
+    0 0 21px rgba(5, 110, 159, 0.9);
+}
+
+.arc_bg {
+  color: rgba(5, 110, 159, 0.3);
+}
+
+.arc_fg {
+  color: rgba(5, 110, 159, 0.6);
+  box-shadow:
+    0 0 10px #056E9F,
+    0 0 21px #056E9F;
+}
+
+.time,
+.date {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.time {
+  color: #0070A4;
+  text-shadow:
+    0 0 10px #056E9F,
+    0 0 21px #056E9F;
+}
+
+.date,
+.current_weather,
+.peak_weather,
+.low_weather {
+  color: #E265A7;
+  text-shadow:
+    0 0 10px #DA5FA1,
+    0 0 21px #DA5FA1;
+}
+
+.current_weather {
+  font-size: 2.8rem;
+  font-weight: 700;
+}
+
+.peak_weather,
+.low_weather {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
