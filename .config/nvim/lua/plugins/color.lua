@@ -12,4 +12,24 @@ return {
             vim.cmd([[colorscheme tokyonight-night]])
         end,
     },
+    {
+        "uga-rosa/ccc.nvim",
+        event = "BufReadPost",
+        opts = {
+            highlighter = {
+                auto_enable = true,
+                lsp = true,
+            },
+            user_command = {
+                enable = true,
+                name = "CccPick",
+                desc = "Pick a color",
+            },
+            window = {
+                border = "rounded",
+                title = "Color Picker",
+                title_pos = "center",
+            },
+        }
+    }
 }
