@@ -8,6 +8,8 @@ abbr -a -- ga 'git add'
 abbr -a -- gc 'git commit -v'
 abbr -a -- gs 'git status'
 abbr -a -- lst 'ls --tree'
+abbr -a -- vim nvim
+abbr -a -- v nvim
 
 zoxide init fish --cmd cd | source
 thefuck --alias | source
