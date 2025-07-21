@@ -1,0 +1,179 @@
+#!/bin/bash
+
+START_MIN=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+CALENDAR_URLS=(
+)
+
+if [ ${#CALENDAR_URLS[@]} -eq 0 ]; then
+    echo "Error: No calendar URLs configured. Edit the script to add your calendar URLs."
+    exit 1
+fi
+
+# Temporary directory for downloaded files
+TEMP_DIR=$(mktemp -d)
+trap "rm -rf $TEMP_DIR" EXIT
+
+# Current timestamp for comparison
+CURRENT_TIMESTAMP=$(date +%s)
+
+# Variables to track the next event
+next_timestamp=0
+next_event_name=""
+
+# Function to convert iCal datetime to Unix timestamp
+ical_to_timestamp() {
+    local ical_date="$1"
+    
+    # Remove TZID if present
+    ical_date=$(echo "$ical_date" | sed 's/.*://')
+    
+    # Handle different date formats
+    if [[ $ical_date =~ ^[0-9]{8}T[0-9]{6}Z?$ ]]; then
+        # Format: YYYYMMDDTHHMMSS or YYYYMMDDTHHMMSSZ
+        year=${ical_date:0:4}
+        month=${ical_date:4:2}
+        day=${ical_date:6:2}
+        hour=${ical_date:9:2}
+        minute=${ical_date:11:2}
+        second=${ical_date:13:2}
+        
+        # Convert to timestamp
+        if [[ $ical_date == *Z ]]; then
+            date -u -d "$year-$month-$day $hour:$minute:$second" +%s 2>/dev/null
+        else
+            date -d "$year-$month-$day $hour:$minute:$second" +%s 2>/dev/null
+        fi
+    elif [[ $ical_date =~ ^[0-9]{8}$ ]]; then
+        # All-day event format: YYYYMMDD
+        year=${ical_date:0:4}
+        month=${ical_date:4:2}
+        day=${ical_date:6:2}
+        date -d "$year-$month-$day" +%s 2>/dev/null
+    else
+        echo "0"
+    fi
+}
+
+# Function to fetch and process one calendar in the background
+process_calendar() {
+    local url="$1"
+    local temp_dir="$2"
+    local result_file="$3"
+
+    # Download the iCal file
+    temp_file="$temp_dir/cal_$(date +%s%N)_$$.ics"
+    if ! curl -s -L -o "$temp_file" "$url"; then
+        echo "Warning: Failed to download $url" >&2
+        rm -f "$temp_file"
+        return
+    fi
+
+    # Normalize and handle continuations
+    sed 's/\r$//' "$temp_file" | \
+    awk '
+    /^[ \t]/ {
+        if (NR > 1) {
+            prev = prev substr($0, 2)
+        }
+        next
+    }
+    {
+        if (NR > 1 && prev != "") {
+            print prev
+        }
+        prev = $0
+    }
+    END {
+        if (prev != "") print prev
+    }
+    ' > "$temp_file.normalized"
+    
+    # Extract DTSTART and SUMMARY pairs from VEVENT blocks
+    awk '
+    BEGIN { in_event = 0; dtstart = ""; summary = "" }
+    
+    /^BEGIN:VEVENT/ { 
+        in_event = 1
+        dtstart = ""
+        summary = ""
+    }
+    
+    /^END:VEVENT/ {
+        if (in_event && dtstart != "" && summary != "") {
+            print dtstart "|" summary
+        }
+        in_event = 0
+        dtstart = ""
+        summary = ""
+    }
+    
+    /^DTSTART/ && in_event {
+        dtstart = $0
+        sub(/^DTSTART[^:]*:/, "", dtstart)
+    }
+    
+    /^SUMMARY:/ && in_event {
+        summary = $0
+        sub(/^SUMMARY:/, "", summary)
+    }
+    ' "$temp_file.normalized" > "$result_file"
+
+    rm -f "$temp_file" "$temp_file.normalized"
+}
+
+# Launch background jobs for all calendar URLs
+event_files=()
+pids=()
+for url in "${CALENDAR_URLS[@]}"; do
+    event_file="$TEMP_DIR/events_$(date +%s%N)_$$.txt"
+    process_calendar "$url" "$TEMP_DIR" "$event_file" &
+    pids+=($!)
+    event_files+=("$event_file")
+done
+
+# Wait for all background jobs to finish
+for pid in "${pids[@]}"; do
+    wait "$pid"
+done
+
+# Process all event files for the next event
+for event_file in "${event_files[@]}"; do
+    while IFS='|' read -r dtstart_val summary_val; do
+        # Skip empty lines
+        [[ -z $dtstart_val || -z $summary_val ]] && continue
+        
+        # Convert to timestamp
+        event_timestamp=$(ical_to_timestamp "$dtstart_val")
+        
+        # Skip if conversion failed or timestamp is 0
+        [[ $event_timestamp -eq 0 ]] && continue
+        
+        # Skip past events
+        [[ $event_timestamp -le $CURRENT_TIMESTAMP ]] && continue
+        
+        # Check if this is the earliest upcoming event
+        if [[ $next_timestamp -eq 0 || $event_timestamp -lt $next_timestamp ]]; then
+            next_timestamp=$event_timestamp
+            next_event_name="$summary_val"
+        fi
+        
+    done < "$event_file"
+done
+
+# Output the time until the next event in the requested format
+if [[ $next_timestamp -gt 0 ]]; then
+    diff=$((next_timestamp - CURRENT_TIMESTAMP))
+    if ((diff < 3600)); then
+        minutes=$((diff / 60))
+        echo "$minutes M: \"$next_event_name\""
+    elif ((diff < 86400)); then
+        hours=$((diff / 3600))
+        echo "$hours H: \"$next_event_name\""
+    else
+        days=$((diff / 86400))
+        echo "$days D: \"$next_event_name\""
+    fi
+else
+    echo "No upcoming events found"
+    exit 1
+fi

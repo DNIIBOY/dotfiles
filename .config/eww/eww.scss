@@ -53,6 +53,7 @@
 }
 
 .date,
+.sync_calendar,
 .current_weather,
 .peak_weather,
 .low_weather {
@@ -71,4 +72,9 @@
 .low_weather {
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.sync_calendar {
+  font-size: 1.4rem;
+  font-weight: 600;
 }

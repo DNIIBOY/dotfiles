@@ -1,3 +1,8 @@
+(defpoll calendar_label_text
+  :interval "10s"
+  "scripts/calendar_event.sh"
+)
+
 (defwidget ram []
     (box :class "genwin"
         :style "padding-top: 12px"
@@ -67,6 +72,13 @@
 (defwidget low_weather []
     (box :class "smallwin"
         (label :class "peak_weather" :text "8°")))
+
+(defwidget sync_calendar []
+    (box :class "genwin" :space-evenly false :hexpand false :halign "end"
+        (label
+            :class "sync_calendar"
+            :text calendar_label_text
+        )))
 
 (defwindow clock
     :stacking "bg"
@@ -158,3 +170,14 @@
         :x 25
         :y 325
     )(cpu))
+
+(defwindow sync_calendar
+    :stacking "bg"
+    :focusable false
+    :monitor 0
+    :geometry (geometry
+        :anchor "bottom right"
+        :x 25
+        :y 25
+        :width 600
+    )(sync_calendar))
