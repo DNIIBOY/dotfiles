@@ -1,6 +1,11 @@
 (defpoll calendar_label_text
-  :interval "10s"
+  :interval "30s"
   "scripts/calendar_event.sh"
+)
+
+(defpoll current_weather
+  :interval "30m"
+  "scripts/weather.sh"
 )
 
 (defwidget ram []
@@ -61,8 +66,7 @@
 
 (defwidget current_weather []
     (box :class "genwin"
-        (label :class "current_weather" :text "10°")
-        (label :class "current_weather" :text "")))
+        (label :class "current_weather" :text current_weather)))
 
 
 (defwidget peak_weather []
@@ -99,7 +103,7 @@
         :anchor "top right"
         :x 25
         :y 25
-        :width 180
+        :width 200
     )(date))
 
 (defwindow current_weather
@@ -108,9 +112,9 @@
     :monitor 0
     :geometry (geometry
         :anchor "top right"
-        :x 85
+        :x 25
         :y 125
-        :width 150
+        :width 200
     )(current_weather))
 
 (defwindow peak_weather
