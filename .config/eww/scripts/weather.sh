@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-weather=$(curl -sL wttr.in/Aalborg?format="%c+%t")
+weather=$(curl -sL wttr.in/Aalborg?format="%c%t")
 
 # Emoji to Nerd Font map
 declare -A emoji_map=(

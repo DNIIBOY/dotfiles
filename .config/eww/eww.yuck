@@ -1,3 +1,7 @@
+(defpoll track_name :interval "5s" "scripts/now_playing.sh name")
+(defpoll artist_name :interval "5s" "scripts/now_playing.sh artist")
+(defpoll cover_path :interval "5s" "scripts/now_playing.sh cover")
+
 (defpoll calendar_label_text
   :interval "30s"
   "scripts/calendar_event.sh"
@@ -7,6 +11,25 @@
   :interval "30m"
   "scripts/weather.sh"
 )
+
+(defwidget now_playing []
+    (box :class "genwin" :visible {track_name != ""} :spacing 12 :space-evenly false :hexpand false
+        (image
+            :class "cover"
+            :path cover_path
+            :image-width 64
+            :image-height 64
+            :halign "start"
+        )
+        (box :class "track_info"
+            :orientation "vertical"
+            :spacing 4
+            :valign "start"
+            :halign "start"
+            :space-evenly false
+            (label :class "track_name" :text track_name :halign "start" :unindent true)
+            (label :class "artist_name" :text artist_name :halign "start" :unindent true)
+        )))
 
 (defwidget ram []
     (box :class "genwin"
@@ -61,13 +84,12 @@
         (label :class "time" :text "${formattime(EWW_TIME, "%H:%M")}")))
 
 (defwidget date []
-    (box :class "genwin" :orientation "v" :space-evenly false
+    (box :class "genwin"
         (label :class "date" :text "${formattime(EWW_TIME, "%d %b")}")))
 
 (defwidget current_weather []
-    (box :class "genwin"
+    (box :class "genwin" :visible {current_weather != ""}
         (label :class "current_weather" :text current_weather)))
-
 
 (defwidget peak_weather []
     (box :class "smallwin"
@@ -78,16 +100,16 @@
         (label :class "peak_weather" :text "8°")))
 
 (defwidget sync_calendar []
-    (box :class "genwin" :space-evenly false :hexpand false :halign "end"
+    (box :class "genwin" :space-evenly false :hexpand false :halign "end" :visible {calendar_label_text != ""}
         (label
             :class "sync_calendar"
             :text calendar_label_text
         )))
 
 (defwindow clock
-    :stacking "bg"
-    :focusable false
     :monitor 0
+    :stacking "bottom"
+    :focusable false
     :geometry (geometry
         :anchor "top left"
         :x 25
@@ -96,9 +118,9 @@
     )(clock))
 
 (defwindow date
-    :stacking "bg"
-    :focusable false
     :monitor 0
+    :stacking "bottom"
+    :focusable false
     :geometry (geometry
         :anchor "top right"
         :x 25
@@ -107,9 +129,9 @@
     )(date))
 
 (defwindow current_weather
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "top right"
         :x 25
@@ -118,9 +140,9 @@
     )(current_weather))
 
 (defwindow peak_weather
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "top right"
         :x 25
@@ -129,9 +151,9 @@
     )(peak_weather))
 
 (defwindow low_weather
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "top right"
         :x 25
@@ -140,9 +162,9 @@
     )(low_weather))
 
 (defwindow battery
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "bottom left"
         :width 130
@@ -152,9 +174,9 @@
     )(battery))
 
 (defwindow ram
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "bottom left"
         :width 130
@@ -164,9 +186,9 @@
     )(ram))
 
 (defwindow cpu
-    :stacking "bg"
-    :focusable "false"
     :monitor 0
+    :stacking "bottom"
+    :focusable "false"
     :geometry (geometry
         :anchor "bottom left"
         :width 130
@@ -176,12 +198,23 @@
     )(cpu))
 
 (defwindow sync_calendar
-    :stacking "bg"
-    :focusable false
     :monitor 0
+    :stacking "bottom"
+    :focusable false
     :geometry (geometry
         :anchor "bottom right"
         :x 25
         :y 25
         :width 600
     )(sync_calendar))
+
+(defwindow now_playing
+    :monitor 0
+    :stacking "bottom"
+    :monitor 0
+    :focusable false
+    :geometry (geometry
+        :anchor "top center"
+        :y 25
+        :width 300
+    )(now_playing))

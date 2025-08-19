@@ -52,6 +52,7 @@
 }
 
 .date,
+.track_info,
 .sync_calendar,
 .current_weather,
 .peak_weather,
@@ -76,4 +77,13 @@
 .sync_calendar {
   font-size: 1.4rem;
   font-weight: 600;
+}
+
+.cover {
+  opacity: 0.5;
+}
+
+.track_name {
+  font-size: 1.6rem;
+  font-weight: 700;
 }
