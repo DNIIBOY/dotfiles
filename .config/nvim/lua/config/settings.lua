@@ -25,6 +25,7 @@ vim.bo.autoread = true
 
 vim.opt.signcolumn = "yes"
 vim.opt.list = true
+vim.opt.listchars:append({ tab = '  ' })
 
 vim.opt.termguicolors = true
 

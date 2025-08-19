@@ -44,12 +44,4 @@ return {
             extensions = {}
         }
     },
-    {
-        "Bekaboo/dropbar.nvim",
-        event = "BufReadPre",
-        keys = {
-            {"<leader>;", function() require("dropbar.api").pick() end, desc = "Pick symbols in winbar"}
-        },
-        opts = {},
-    }
 }

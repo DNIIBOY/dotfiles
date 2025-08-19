@@ -20,7 +20,7 @@ return {
         end,
         keys = {
             { "<leader>a", function() require("harpoon"):list():add() end, desc = "Add file to Harpoon" },
-            { "<C-g>", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "Toggle Harpoon menu" },
+            { "<C-f>", function() require("harpoon").ui:toggle_quick_menu(require("harpoon"):list()) end, desc = "Toggle Harpoon menu" },
             { "<leader>j", function() require("harpoon"):list():select(1) end, desc = "Harpoon buffer 1" },
             { "<leader>k", function() require("harpoon"):list():select(2) end, desc = "Harpoon buffer 2" },
             { "<leader>l", function() require("harpoon"):list():select(3) end, desc = "Harpoon buffer 3" },
