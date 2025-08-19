@@ -50,6 +50,7 @@ tooltip {
 #pulseaudio:hover,
 #bluetooth:hover,
 #network:hover,
+#custom-vpn:hover,
 #battery:hover {
     transition: all .3s ease;
     color: @color9;
@@ -100,20 +101,25 @@ tooltip {
 }
 
 #pulseaudio {
-    padding: 0px 0.3rem;
+    padding: 0px 0.8rem;
     color: @color7;
     transition: all .3s ease;
 }
 
 #bluetooth {
-    padding: 0px 0.5rem;
+    padding: 0px 0rem 0rem 0.4rem;
     transition: all .3s ease;
     color: @color7;
-
 }
 
 #network {
     padding: 0px 0.75rem;
+    transition: all .3s ease;
+    color: @color7;
+}
+
+#custom-vpn {
+    padding: 0px 0.6rem 0rem 0rem;
     transition: all .3s ease;
     color: @color7;
 }

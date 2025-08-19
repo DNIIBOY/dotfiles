@@ -5,7 +5,7 @@
     "reload_style_on_change": true,
     "modules-left": ["clock"],
     "modules-center": ["hyprland/workspaces"],
-    "modules-right": ["bluetooth", "pulseaudio", "network", "battery"],
+    "modules-right": ["bluetooth", "pulseaudio", "custom/vpn", "network",  "battery"],
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -45,6 +45,13 @@
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip-format-ethernet": "{ifname} 🖧 ",
         "on-click": "ghostty -e nmtui"
+    },
+    "custom/vpn": {
+        "exec": "vpn status | rg -qF Disconnected && echo  || echo ",
+        "interval": 5,
+        "format": "{}",
+        "on-click": "~/.config/waybar/toggle-aau-vpn.sh",
+        "tooltip-format": "AAU VPN Status: {}",
     },
     "bluetooth": {
         "format-on": "󰂯",

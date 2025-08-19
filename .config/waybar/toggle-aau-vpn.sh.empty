@@ -1,0 +1,9 @@
+#!/bin/bash
+
+status=$(/opt/cisco/secureclient/bin/vpn status | rg Disconnected)
+
+if [ -n "$status" ]; then
+    printf "%s\n%s\n" "<username>" "<password>" $(oathtool --totp -b <otp code>) | vpn connect ssl-vpn1.aau.dk -s
+else
+    vpn disconnect
+fi
