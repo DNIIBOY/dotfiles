@@ -1,3 +1,7 @@
 .config/tmux/plugins/
 .config/eww/scripts/calendar_event.sh
+.config/waybar/toggle-aau-vpn.sh
+.config/eww/scripts/.lastfm_key
+.config/fish/functions/sshaau.fish
+.config/fish/functions/sshinnhabit.fish
 **/lazy-lock.json
