@@ -1,0 +1,17 @@
+#!/usr/bin/env fish
+
+set password "<password>"
+set totp_secret "<otp code>"
+set otp (oathtool --totp -b $totp_secret)
+
+expect -c '
+  set timeout -1
+  spawn ssh -tt -J <email>@sshgw.aau.dk <email>@inno-innhabit01.srv.aau.dk
+  expect "Password:"
+  send "'"$password"'\r"
+  expect "Enter Your Microsoft verification code"
+  send "'"$otp"'\r"
+  expect "<email>@inno-innhabit01.srv.aau.dk\'s password:"
+  send "'"$password"'\r"
+  interact
+'
