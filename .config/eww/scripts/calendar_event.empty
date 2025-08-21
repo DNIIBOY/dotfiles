@@ -154,7 +154,7 @@ for event_file in "${event_files[@]}"; do
         # Check if this is the earliest upcoming event
         if [[ $next_timestamp -eq 0 || $event_timestamp -lt $next_timestamp ]]; then
             next_timestamp=$event_timestamp
-            next_event_name="$summary_val"
+            next_event_name="${summary_val//\\}"
         fi
         
     done < "$event_file"
