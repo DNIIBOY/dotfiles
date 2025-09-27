@@ -7,7 +7,7 @@
 window-padding-x = 0
 window-padding-y = 0
 
-theme = tokyonight_night
+theme = TokyoNight Night
 confirm-close-surface = false
 
 command = /usr/bin/fish --login --interactive
