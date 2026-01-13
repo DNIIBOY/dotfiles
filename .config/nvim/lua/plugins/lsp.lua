@@ -269,10 +269,10 @@ return {
                     --    See the README about individual language/framework/plugin snippets:
                     --    https://github.com/rafamadriz/friendly-snippets
                     {
-                      "rafamadriz/friendly-snippets",
-                      config = function()
-                        require("luasnip.loaders.from_vscode").lazy_load()
-                      end,
+                        "rafamadriz/friendly-snippets",
+                        config = function()
+                            require("luasnip.loaders.from_vscode").lazy_load()
+                        end,
                     },
                 },
             },
@@ -367,16 +367,17 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter",
-        event = "BufReadPost",
+        branch = "master",
+        lazy = false,
         build = ":TSUpdate",
-        opts = {
-            ensure_installed = { "lua", "python" },
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = {},
-            },
-            indent = { enable = true, disable = {} },
-        }
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "lua", "python" },
+                auto_install = true,
+                highlight = {
+                    enable = true,
+                },
+            })
+        end
     }
 }
