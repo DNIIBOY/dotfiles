@@ -39,6 +39,7 @@ return {
                     map("<leader>rr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
                     map("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
                     map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+                    map("<leader>qf", vim.lsp.buf.code_action, "[Q]uick [F]ix")
                     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
                     local function client_supports_method(client, method, bufnr)
@@ -170,6 +171,16 @@ return {
                         },
                     },
                 },
+                arduino_language_server = {
+                    cmd = {
+                        "arduino-language-server",
+                        "-cli-config", vim.fn.expand("~/.arduino15/arduino-cli.yaml"), -- Update path if needed
+                        "-fqbn", "arduino:avr:uno", -- Change to your board's FQBN
+                        "-cli", "arduino-cli",
+                        "-clangd", "clangd"
+                    },
+                    filetypes = { "arduino" },
+                },
             }
 
             -- Ensure the servers and tools above are installed
@@ -190,6 +201,9 @@ return {
                 "stylua",
                 "isort",
                 "black",
+                "mypy",
+                "arduino-language-server",
+                "clangd",
             })
             require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -203,7 +217,7 @@ return {
                         -- by the server configuration above. Useful when disabling
                         -- certain features of an LSP (for example, turning off formatting for ts_ls)
                         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-                        require("lspconfig")[server_name].setup(server)
+                        vim.lsp.config[server_name].setup(server)
                     end,
                 },
             })
@@ -217,7 +231,12 @@ return {
             {
                 "<leader>rf",
                 function()
-                    require("conform").format({ async = true, lsp_format = "fallback" })
+                    local filetype = vim.bo.filetype
+                    if filetype == "python" then
+                        require("conform").format({ async = true, lsp_format = false })
+                    else
+                        require("conform").format({ async = true, lsp_format = "fallback" })
+                    end
                 end,
                 mode = "",
                 desc = "[R]e[F]ormat buffer",
@@ -232,6 +251,11 @@ return {
                 local disable_filetypes = { c = true, cpp = true }
                 if disable_filetypes[vim.bo[bufnr].filetype] then
                     return nil
+                elseif vim.bo[bufnr].filetype == "python" then
+                    return {
+                        timeout_ms = 500,
+                        lsp_format = false,
+                    }
                 else
                     return {
                         timeout_ms = 500,
