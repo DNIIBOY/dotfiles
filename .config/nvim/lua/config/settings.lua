@@ -33,6 +33,12 @@ if vim.fn.has("win32") == 1 then
     vim.opt.shell = "powershell.exe"
 end
 
+vim.filetype.add({
+    extension = {
+        conf = "ini",
+    },
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank({

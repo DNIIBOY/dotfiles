@@ -35,9 +35,11 @@ return {
                     end
 
                     map("gd", function() require("telescope.builtin").lsp_definitions() end, "[G]oto [D]efinition")
-                    map("gI", function() require("telescope.builtin").lsp_implementations() end, "[G]oto [I]mplementation")
+                    map("gI", function() require("telescope.builtin").lsp_implementations() end,
+                        "[G]oto [I]mplementation")
                     map("<leader>rr", function() require("telescope.builtin").lsp_references() end, "[G]oto [R]eferences")
-                    map("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end, "[D]ocument [S]ymbols")
+                    map("<leader>ds", function() require("telescope.builtin").lsp_document_symbols() end,
+                        "[D]ocument [S]ymbols")
                     map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
                     map("<leader>qf", vim.lsp.buf.code_action, "[Q]uick [F]ix")
                     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -175,7 +177,7 @@ return {
                     cmd = {
                         "arduino-language-server",
                         "-cli-config", vim.fn.expand("~/.arduino15/arduino-cli.yaml"), -- Update path if needed
-                        "-fqbn", "arduino:avr:uno", -- Change to your board's FQBN
+                        "-fqbn", "arduino:avr:uno",                                    -- Change to your board's FQBN
                         "-cli", "arduino-cli",
                         "-clangd", "clangd"
                     },
@@ -391,16 +393,23 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter",
-        branch = "master",
+        branch = "main",
         lazy = false,
         build = ":TSUpdate",
         config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = { "lua", "python" },
-                auto_install = true,
-                highlight = {
-                    enable = true,
-                },
+            require("nvim-treesitter").setup({
+                install_dir = vim.fn.stdpath("data") .. "/site",
+            })
+
+            require("nvim-treesitter").install({
+                "lua", "python", "markdown", "markdown_inline", "go", "yaml", "ini"
+            }):wait(300000)
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "*",
+                callback = function()
+                    pcall(vim.treesitter.start)
+                end,
             })
         end
     }
